@@ -1,0 +1,29 @@
+import { Children, createContext, useContext, useState } from "react";
+import api from "../api/axios";
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({Children}) => {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+
+    const login = async (email, password) => {
+        const {data} = await api.post('/login',{email, password});
+
+        localStorage.setItem('token',data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+            setUser(data.user);
+    };
+
+    const logout = () => {
+        localStorage.clear();
+        setUser(null);
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, login, logout }}>
+            {Children}
+        </AuthContext.Provider>
+    );
+}
+
+export const useAuth = () => useContext(AuthContext);
