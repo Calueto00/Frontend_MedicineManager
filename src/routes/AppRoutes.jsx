@@ -1,12 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
+import Login from "../pages/Login";
 
 export default function AppRoutes() {
     return (
         <Routes>
             <Route 
                 path="/login" 
-                element={} />
+                element={<Login />} />
             <Route 
                 path="/admin"
                 element={
