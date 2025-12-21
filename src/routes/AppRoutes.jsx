@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import Login from "../pages/Login";
+import Dashboard from "../pages/Dashboard";
 
 export default function AppRoutes() {
     return (
@@ -12,7 +13,7 @@ export default function AppRoutes() {
                 path="/admin"
                 element={
                     <ProtectedRoute role='admin'>
-                        /** aqui vem o dashboard */
+                        <Dashboard />
                     </ProtectedRoute>
                 } />
 
