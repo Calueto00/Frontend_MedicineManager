@@ -1,9 +1,11 @@
 import { useAuth } from "../auth/AuthContext";
+import { useState } from "react";
 import SideDashboard from "../components/SideDashboard";
 
 export default function Dashboard() {
     
     const {user} = useAuth();
+    const [patients, setPatients] = useState([]);
 
     return (
         <main className="flex h-screen">
