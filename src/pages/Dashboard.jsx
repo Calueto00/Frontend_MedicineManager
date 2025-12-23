@@ -45,7 +45,7 @@ export default function Dashboard() {
 
     return (
         <main className="flex h-screen">
-            <SideDashboard />
+            
             <section className="flex-1  overflow-auto bg-slate-100">
                 <div className="flex items-center justify-between mb-2 bg-white p-2">
                     <div>
@@ -126,7 +126,7 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/**aqui vem os blocos de graficos e listagem */}
+                {/**aqui vem os blocos de graficos e listagem de appointments*/}
                 <div className="flex gap-2 p-2">
                     <GraficosDashboard 
                         appointment={appointmentCount} 

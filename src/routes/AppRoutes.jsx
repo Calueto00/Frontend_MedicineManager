@@ -2,37 +2,50 @@ import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
+import PatientPage from "../pages/PatientPage";
+import AdminLayout from "../layouts/AdminLayout";
 
 export default function AppRoutes() {
     return (
         <Routes>
-            <Route 
-                path="/login" 
-                element={<Login />} />
-            <Route 
+            <Route
+                path="/login"
+                element={<Login />}
+            />
+
+            {/* Admin Routes com Layout */}
+            <Route
                 path="/admin"
                 element={
                     <ProtectedRoute role='admin'>
-                        <Dashboard />
+                        <AdminLayout />
                     </ProtectedRoute>
-                } />
+                }
+            >
+                <Route index element={<Dashboard />} />
+                <Route path="patients" element={<PatientPage />} />
+                
+                {/* Adicione mais rotas aqui conforme necessário */}
+            </Route>
 
-            <Route 
+            <Route
                 path="/doctor"
                 element={
                     <ProtectedRoute role='doctor'>
-                        /** aqui vem o doctor */
+                        {/** aqui vem o doctor */}
                     </ProtectedRoute>
-                } />
+                }
+            />
 
-            <Route 
+            <Route
                 path="/patient"
                 element={
                     <ProtectedRoute role='patient'>
-                        /** aqui vem o dashboard */
+                        {/** aqui vem o dashboard */}
                     </ProtectedRoute>
-                } />
-            
+                }
+            />
+
         </Routes>
     )
 }
