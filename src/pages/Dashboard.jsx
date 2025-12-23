@@ -3,11 +3,13 @@ import SideDashboard from "../components/SideDashboard";
 import api from "../api/axios";
 import { useEffect, useState } from "react";
 import GraficosDashboard from "../components/GraficosDashboard";
+import AppointmentTable from "../components/dashboard/AppointmentTable";
 
 
 export default function Dashboard() {
     const [patients, setPatients] = useState([]);
     const [doctors, setDoctors] = useState([]);
+    const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -17,13 +19,15 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [patientResponse, doctorResponse] = await Promise.all([
+                const [patientResponse, doctorResponse, appointmentResponse] = await Promise.all([
                     api.get('/patients'),
                     api.get('/doctors'),
+                    api.get('/appointments'),
                 ]);
 
                 setPatients(patientResponse.data || []);
                 setDoctors(doctorResponse.data || []);
+                setAppointments(appointmentResponse.data || []);
 
                 setLoading(true);
             } catch (error) {
@@ -36,14 +40,14 @@ export default function Dashboard() {
 
     const patientCount = patients.length || 0;
     const doctorCount = doctors.length || 0;
-    const AppointmentCount = 0;
+    const appointmentCount = appointments.length || 0;
     const examesCount = 0;
 
     return (
         <main className="flex h-screen">
             <SideDashboard />
             <section className="flex-1  overflow-auto bg-slate-100">
-                <div className="flex items-center justify-between mb-4 bg-white p-2">
+                <div className="flex items-center justify-between mb-2 bg-white p-2">
                     <div>
                         <h1 className="text-xl font-bold text-gray-800">
                             Olá, {user.name}
@@ -90,6 +94,22 @@ export default function Dashboard() {
                         </div>
                     </div>
 
+                    {/* Appointments Card */}
+                    <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
+                        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 text-white">
+                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                                <path d="M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M8 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M3 10h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
+                        <div>
+                            <span className="text-gray-500 text-sm">Agendamentos</span>
+                            <h2 className="font-bold text-2xl mt-1">{appointmentCount}</h2>
+                        </div>
+                    </div>
+
                     {/* Exams Card */}
                     <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
                         <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white">
@@ -104,27 +124,15 @@ export default function Dashboard() {
                             <h2 className="font-bold text-2xl mt-1">{examesCount}</h2>
                         </div>
                     </div>
-
-                    {/* Appointments Card */}
-                    <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 text-white">
-                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                                <path d="M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M8 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M3 10h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </div>
-                        <div>
-                            <span className="text-gray-500 text-sm">Agendamentos</span>
-                            <h2 className="font-bold text-2xl mt-1">{AppointmentCount}</h2>
-                        </div>
-                    </div>
                 </div>
 
                 {/**aqui vem os blocos de graficos e listagem */}
-                <div className="border">
-
+                <div className="flex gap-2 p-2">
+                    <GraficosDashboard 
+                        appointment={appointmentCount} 
+                        patient={patientCount}
+                        doctor={doctorCount} />
+                    <AppointmentTable appointments={appointments} />
                 </div>
 
             </section>
