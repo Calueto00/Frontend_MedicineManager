@@ -6,25 +6,24 @@ import PatientDetails from "../components/dashboard/patients/PatientDetails";
 export default function PatientPage() {
     const [patients, setPatients] = useState([]);
     const [tabs, setTabs] = useState('list');
-    const [user, setUser] = useState({id: null,name : ''});
+    const [user, setUser] = useState({ id: null, name: '' });
+
+    const fetchData = async () => {
+        try {
+            const response = await api.get('/patients');
+            setPatients(response.data || []);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                await api.get('/patients').then((response) => {
-                    setPatients(response.data || []);
-                });
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
         fetchData();
     }, []);
 
-    const details = (id, name) =>{
+    const details = (id, name) => {
         try {
-            if(id){
+            if (id) {
                 setTabs('profile');
                 setUser({
                     id: id,
@@ -35,12 +34,14 @@ export default function PatientPage() {
             console.error(error);
         }
     }
-    const patientList = () =>{
+    const patientList = () => {
         setUser({
             id: null,
             name: ''
         });
         setTabs('list');
+        // Re-fetch patients when returning to the list
+        fetchData();
     }
 
     const addPatient = () => {
@@ -58,29 +59,36 @@ export default function PatientPage() {
                 <h1 className="font-semibold text-xl">Patients Management</h1>
                 <button
                     className={tabs === 'add' ? 'bg-blue-800 text-white rounded p-2 animate-pulse' : 'bg-blue-800 text-white rounded p-2'}
-                     onClick={addPatient}>
-                        + New Patient
+                    onClick={addPatient}>
+                    + New Patient
                 </button>
             </div>
 
             {/**number of patients and filter */}
             <div className="flex justify-between items-center border border-slate-300 p-2 space-x-4">
-                <div className="space-x-3">
-                    <button 
-                    className={tabs === 'list' ? 'border-b-2 border-blue-700 py-2': 'py-2'}
-                    onClick={patientList}>Patients List</button>
+                <div className="space-x-3 flex items-center">
+                    <button
+                        className={tabs === 'list' ? 'border-b-2 border-blue-700 p-2 cursor-pointer' : 'p-2 cursor-pointer hover:border hover:border-blue-700'}
+                        onClick={patientList}>Patients List</button>
                     {
-                        user.id ? <span className="font-semibold"> > {user.name}</span> : ''
+                        user.id ? (
+                            <span className="font-semibold flex items-center gap-2 text-sm">
+                                <svg className="w-4 h-4 text-gray-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                                    <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                <span>{user.name}</span>
+                            </span>
+                        ) : ''
                     }
                 </div>
-                
-                
+
+
 
             </div>
 
             {/**table de patients */}
             {
-                tabs === 'list' && 
+                tabs === 'list' &&
                 <div className="p-2 space-y-3">
                     <div className="flex items-center justify-between">
                         <form action="" className="space-x-3 border">
@@ -122,9 +130,9 @@ export default function PatientPage() {
                                         <td className="p-2">{patient?.birth ? new Date(patient.birth).toLocaleDateString() : '-'}</td>
                                         <td className="p-2">{patient?.address ?? '-'}</td>
                                         <td className="p-2 flex items-center justify-center gap-2">
-                                            <button title="Detalhes" 
+                                            <button title="Detalhes"
                                                 className="flex items-center gap-2 bg-blue-600 text-white rounded px-3 py-1 hover:bg-blue-700 transition"
-                                                onClick={()=> details(patient.id, patient.user.name)}>
+                                                onClick={() => details(patient.id, patient.user.name)}>
                                                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M12 5c-7 0-11 6-11 7s4 7 11 7 11-6 11-7-4-7-11-7z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                                     <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
@@ -158,7 +166,7 @@ export default function PatientPage() {
 
             {/**details de patient */}
             {
-                tabs === 'profile' && <PatientDetails id = {user.id}/>
+                tabs === 'profile' && <PatientDetails id={user.id} />
             }
         </main>
     )
