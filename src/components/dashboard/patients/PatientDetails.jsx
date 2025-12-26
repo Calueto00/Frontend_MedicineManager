@@ -65,7 +65,7 @@ export default function PatientDetails({ id }) {
                                 Appointment
                             </button>
                         </div>
-                            {/**appointment registers */}
+                        {/**appointment registers */}
                         <div>
                             {patient?.appointments && patient.appointments.length > 0 ? (
                                 patient.appointments.map((appointment) => (
@@ -93,15 +93,46 @@ export default function PatientDetails({ id }) {
                                     </div>
                                 ))
                             ) : (
-                                <p className="text-sm text-gray-500">Nenhum agendamento encontrado.</p>
+                                <p className="text-sm text-gray-500">No Appointment found.</p>
                             )}
                         </div>
                     </div>
                 </div>
 
                 {/**information of archives and medical records */}
-                <div className="border w-100">
-                    appointment
+                <div className="w-100 space-y-3">
+                    {/**documents */}
+                    <div className="border border-slate-300 rounded-lg bg-white shadow-md p-2">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-semibold text-gray-600">Documents</h3>
+                            <span className="text-sm text-blue-700 font-semibold">Add Files</span>
+                        </div>
+                        <div>
+                            {
+                                patient?.appointments?.exam_request && patient.appointments.exam_quest.length > 0 ? (
+                                    patient?.appointments?.exam_request?.map((exams)=>(
+                                        <div key={exams.id}>{exams.id}</div>
+                                    ))
+                                ) : (<div className="text-center text-gray-700 p-2">No files found..</div>)
+                            }
+                        </div>
+                    </div>
+
+                    {/**medical records */}
+                    <div className="border border-slate-300 shadow-md rounded-lg p-2 bg-white">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-semibold text-gray-600">Medical Records</h3>
+                            <span className="text-sm text-blue-700 font-semibold">Add Record</span>
+                        </div>
+                        <div>
+                            {
+                                patient?.appointments?.medical_record && patient?.appointments?.medical_record.length > 0 ?
+                                (patient?.appointment?.medical_record.map((record)=>(
+                                    <div key={record.id}>os records</div>
+                                ))) : (<div className="text-base text-center text-gray-600">No Record found</div>)
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
