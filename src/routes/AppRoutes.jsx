@@ -4,6 +4,7 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import PatientPage from "../pages/PatientPage";
 import AdminLayout from "../layouts/AdminLayout";
+import MedicalPage from "../pages/MedicalPage";
 
 export default function AppRoutes() {
     return (
@@ -25,7 +26,8 @@ export default function AppRoutes() {
                 <Route index element={<Dashboard />} />
                 <Route path="patients" element={<PatientPage />} />
                 
-                {/* Adicione mais rotas aqui conforme necessário */}
+                {/* medicla routes */}
+                <Route path="doctors" element={<MedicalPage />} />
             </Route>
 
             <Route
