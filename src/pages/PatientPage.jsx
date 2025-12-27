@@ -122,7 +122,7 @@ export default function PatientPage() {
                                 </tr>
                             ) : (
                                 patients.map((patient) => (
-                                    <tr key={patient?.id} className="border-b-2 border-slate-200 hover:bg-slate-50">
+                                    <tr key={patient?.id} className="border-b-4 border-slate-200 hover:bg-slate-50">
                                         <td className="p-2">{patient?.id ?? '-'}</td>
                                         <td className="p-2 text-left">{patient?.user?.name ?? '-'}</td>
                                         <td className="p-2">{patient?.user?.email ?? '-'}</td>
@@ -137,7 +137,7 @@ export default function PatientPage() {
                                                     <path d="M12 5c-7 0-11 6-11 7s4 7 11 7 11-6 11-7-4-7-11-7z" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                                     <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
-                                                <span className="text-sm">Detalhes</span>
+                                                
                                             </button>
 
                                             <button title="Excluir" className="flex items-center gap-2 bg-red-600 text-white rounded px-3 py-1 hover:bg-red-700 transition">
@@ -148,7 +148,7 @@ export default function PatientPage() {
                                                     <path d="M14 11v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     <path d="M9 6V4h6v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
-                                                <span className="text-sm">Excluir</span>
+                                                
                                             </button>
                                         </td>
                                     </tr>
