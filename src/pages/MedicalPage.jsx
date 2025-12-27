@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../auth/AuthContext"
+
 import api from "../api/axios";
+import { Link } from "react-router-dom";
 export default function MedicalPage(){
     const [doctors, setDoctors] = useState([]);
     const [upcoming, setUpComing] = useState([]);
@@ -19,7 +20,7 @@ export default function MedicalPage(){
     useEffect(()=>{
         fetchData();
     })
-    const {user} = useAuth();
+
     
     return (
         <>
@@ -31,7 +32,7 @@ export default function MedicalPage(){
             <div className="flex justify-between gap-3 p-3">
                 {/**doctors list table */}
                 <div className="flex-1 space-y-3">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between bg-white p-2 rounded shadow-md">
                         <h2>Doctor List</h2>
                         <span>Total ({doctors.length})</span>
                     </div>
@@ -65,7 +66,7 @@ export default function MedicalPage(){
                                         <td>{doctor.especiality ?? 'no especiality'}</td>
                                         <td>{doctor.crm}</td>
                                         <td className="flex p-1 space-x-4 items-center justify-center">
-                                            <button title="Detalhes"
+                                            <Link to={`/admin/doctors/${doctor.id}`} title="Detalhes"
                                                 className=" bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition"
                                                 >
                                                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +74,7 @@ export default function MedicalPage(){
                                                     <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                                                 </svg>
                                                 
-                                            </button>
+                                            </Link>
 
                                             <button title="Excluir" className=" bg-red-600 text-white rounded px-4 py-2 hover:bg-red-700 transition">
                                                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,7 +95,7 @@ export default function MedicalPage(){
                 </div>
 
                 {/**upcoming appointment */}
-                <div className="w-90">
+                <div className="w-80">
                     <div className="bg-white rounded-lg p-3 shadow">
                         <div className="flex justify-between text-sm">
                             <h3 className=" font-semibold">Upcoming Appointment</h3>
