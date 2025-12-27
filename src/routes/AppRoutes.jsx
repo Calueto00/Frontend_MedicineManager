@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import PatientPage from "../pages/PatientPage";
 import AdminLayout from "../layouts/AdminLayout";
 import MedicalPage from "../pages/MedicalPage";
+import DoctorDetails from "../pages/DoctorDetails";
 
 export default function AppRoutes() {
     return (
@@ -28,6 +29,7 @@ export default function AppRoutes() {
                 
                 {/* medicla routes */}
                 <Route path="doctors" element={<MedicalPage />} />
+                <Route path="doctors/:id" element={<DoctorDetails />} />
             </Route>
 
             <Route
