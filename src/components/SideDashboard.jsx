@@ -5,7 +5,9 @@ import { useAuth } from "../auth/AuthContext";
 export default function SideDashboard() {
     const [isOpen, setIsOpen] = useState(true);
     const navigate = useNavigate();
-    const { user, logout } = useAuth();
+    const auth = useAuth();
+    const user = auth?.user;
+    const logout = auth?.logout || (() => { });
 
     const menuItems = [
         { icon: "📊", label: "Dashboard", path: "/admin" },
@@ -66,7 +68,7 @@ export default function SideDashboard() {
 
             {/* User Profile & Logout */}
             <div className="p-6 border-t border-blue-500/30 space-y-4">
-                
+
                 <button
                     onClick={handleLogout}
                     className="w-full flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-red-500/40 transition-colors duration-200 group text-red-300 hover:text-red-200"
