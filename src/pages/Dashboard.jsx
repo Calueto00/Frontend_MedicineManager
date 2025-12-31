@@ -3,8 +3,8 @@ import SideDashboard from "../components/SideDashboard";
 import api from "../api/axios";
 import { useEffect, useState } from "react";
 import GraficosDashboard from "../components/GraficosDashboard";
-import AppointmentTable from "../components/dashboard/AppointmentTable";
-
+import AppointmentDashboard from "../components/dashboard/AppointmentDashboard";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
     const [patients, setPatients] = useState([]);
@@ -64,7 +64,7 @@ export default function Dashboard() {
                 </div>
 
                 {/**dados estatisticos de patients, doctors and appointments  */}
-                <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {/* Patients Card */}
                     <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
                         <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-white">
@@ -132,7 +132,35 @@ export default function Dashboard() {
                         appointment={appointmentCount} 
                         patient={patientCount}
                         doctor={doctorCount} />
-                    <AppointmentTable appointments={appointments} />
+                    <AppointmentDashboard appointments={appointments} />
+                </div>
+                <div className=" p-2">
+                    <div className="border rounded-md bg-white  h-42 w-80 p-1 border-slate-300 shadow-md">
+                        <div className="flex justify-between">
+                            <h3 className="text-sm font-semibold">Doctor List</h3>
+                            <Link 
+                                className="text-blue-800 font-bold text-sm"
+                                to={'/dashboard/doctors'} >See All</Link>
+                        </div>
+                        <div className=" h-35 overflow-y-auto">
+                            {
+                                doctors?.length === 0 ? (<div className="text-center text-sm text-gray-600 p-2">No Registers Found</div>) : (
+                                    <ul className="space-y-1">
+                                        {
+                                            doctors?.map((doctor)=>(
+                                                <li className="border border-slate-300 text-sm bg-slate-100 rounded flex justify-between items-center p-1" key={doctor.id}>
+                                                    
+                                                        <h3 className="font-semibold ">{doctor?.user?.name}</h3>
+                                                        <Link className=" font-bold text-blue-900" to={`/dashboard/doctor/${doctor.id}`}>Details</Link>
+                                                   
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                )
+                            }
+                        </div>
+                    </div>
                 </div>
 
             </section>

@@ -1,5 +1,5 @@
 
-export default function AppointmentTable({appointments}){
+export default function AppointmentDashboard({appointments}){
     return (
         <div className="border space-y-2 flex-1 border-slate-300 bg-white rounded-lg shadow-md p-2">
                 <div className=" font-semibold flex items-center justify-between">
@@ -10,11 +10,9 @@ export default function AppointmentTable({appointments}){
                 <table className="min-w-full m-auto text-sm text-center">
                     <thead>
                         <tr className="bg-slate-300 text-gray-600">
-                            <th className="p-1">ID</th>
-                            <th>Patient</th>
+                            <th className="p-1">Patient</th>
                             <th>Date/Time</th>
                             <th>Doctor</th>
-                            <th>Especiality</th>
                             <th>Status</th>
                             <th>Details</th>
                         </tr>
@@ -23,11 +21,9 @@ export default function AppointmentTable({appointments}){
                         {
                             appointments.map((appointment)=>(
                                 <tr className="border-b border-slate-300">
-                                    <td className="p-1" key={appointment.id}>{appointment.id}</td>
-                                    <td key={appointment.id}>{appointment.patient.user.name}</td>
+                                    <td className="p-1" key={appointment.id}>{appointment.patient.user.name}</td>
                                     <td key={appointment.id}>{appointment.date_houra}</td>
                                     <td key={appointment.id}>{appointment.doctor.user.name}</td>
-                                    <td key={appointment.id}>{appointment.doctor.especiality}</td>
                                     <td key={appointment.id}>{appointment.status}</td>
                                     <td>Details</td>
                                 </tr>
