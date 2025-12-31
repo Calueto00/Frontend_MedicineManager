@@ -10,12 +10,12 @@ export default function SideDashboard() {
     const logout = auth?.logout || (() => { });
 
     const menuItems = [
-        { icon: "📊", label: "Dashboard", path: "/admin" },
-        { icon: "👥", label: "Pacientes", path: "/admin/patients" },
-        { icon: "👨‍⚕️", label: "Médicos", path: "/admin/doctors" },
-        { icon: "📋", label: "Agendamentos", path: "/admin/appointments" },
-        { icon: "🏥", label: "Departamentos", path: "/admin/departments" },
-        { icon: "⚙️", label: "Configurações", path: "/admin/settings" },
+        { icon: "📊", label: "Dashboard", path: "/dashboard" },
+        { icon: "👥", label: "Patients", path: "/dashboard/patients" },
+        { icon: "👨‍⚕️", label: "Doctors", path: "/dashboard/doctors" },
+        { icon: "📋", label: "Appointments", path: "/dashboard/appointments" },
+        { icon: "🏥", label: "Schedules", path: "/dashboard/schedules" },
+        { icon: "⚙️", label: "Departments", path: "/dashboard/departments" },
     ];
 
     const handleLogout = () => {

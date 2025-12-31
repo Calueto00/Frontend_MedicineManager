@@ -18,7 +18,7 @@ export default function AppRoutes() {
 
             {/* Admin Routes com Layout */}
             <Route
-                path="/admin"
+                path="/dashboard"
                 element={
                     <ProtectedRoute role='admin'>
                         <AdminLayout />

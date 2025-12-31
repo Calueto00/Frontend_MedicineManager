@@ -44,7 +44,7 @@ export default function MedicalPage() {
         <>
             <div className="bg-white p-2 flex items-center justify-between">
                 <h1>Doctors Management</h1>
-                <Link to={'/admin/doctor_novo'} className="bg-blue-800 text-white rounded-md px-4 py-2">
+                <Link to={'/dashboard/doctor_novo'} className="bg-blue-800 text-white rounded-md px-4 py-2">
                     <span>Add New</span>
                 </Link>
             </div>
@@ -86,7 +86,7 @@ export default function MedicalPage() {
                                         <td>{doctor.especiality ?? 'no especiality'}</td>
                                         <td>{doctor.crm}</td>
                                         <td className="flex p-1 space-x-4 items-center justify-center">
-                                            <Link to={`/admin/doctor/${doctor.id}`} title="Detalhes"
+                                            <Link to={`/dashboard/doctor/${doctor.id}`} title="Detalhes"
                                                 className=" bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition"
                                             >
                                                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
