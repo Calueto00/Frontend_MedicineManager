@@ -50,7 +50,7 @@ export default function GraficosDashboard({appointment, patient,doctor}) {
     
 
     return (
-        <section className="">
+        <section className="w-80">
                 <div className="bg-white border border-slate-300 rounded-lg shadow-md p-2 h-[250px]  rounded-lg">
                     <h3 className=" font-semibold text-gray-500">
                         Proporção Pacientes vs Médicos
