@@ -1,5 +1,6 @@
 import api from "../api/axios"
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import PatientAdd from "../components/dashboard/patients/PatientAdd";
 import PatientDetails from "../components/dashboard/patients/PatientDetails";
 
@@ -8,6 +9,7 @@ export default function PatientPage() {
     const [tabs, setTabs] = useState('list');
     const [user, setUser] = useState({ id: null, name: '' });
 
+    //return all the datas
     const fetchData = async () => {
         try {
             const response = await api.get('/patients');
@@ -17,6 +19,20 @@ export default function PatientPage() {
         }
     };
 
+    //method to delete patient
+    const handleDelete = async (id) => {
+        
+        if(!confirm('Do you really want to delete ?')) return;
+        try {
+            await api.delete(`/patient/${id}`);
+            toast.success('Patient deleted successfully !');
+            await fetchData();
+        } catch (error) {
+            toast.error(error);
+        }
+    }
+
+    //take all the datas when the page reload
     useEffect(() => {
         fetchData();
     }, []);
@@ -106,7 +122,7 @@ export default function PatientPage() {
                     <table className="min-w-full text-sm text-center">
                         <thead>
                             <tr className="text-gray-500">
-                                <th className="p-2">ID</th>
+                               
                                 <th className="p-2">Nome</th>
                                 <th className="p-2">Email</th>
                                 <th className="p-2">Telefone</th>
@@ -122,9 +138,9 @@ export default function PatientPage() {
                                 </tr>
                             ) : (
                                 patients.map((patient) => (
-                                    <tr key={patient?.id} className="border-b-4 border-slate-200 hover:bg-slate-50">
-                                        <td className="p-2">{patient?.id ?? '-'}</td>
-                                        <td className="p-2 text-left">{patient?.user?.name ?? '-'}</td>
+                                    <tr key={patient?.id} className="border-b-4 border-slate-200 hover:bg-slate-50 text-center">
+                                        
+                                        <td className="p-2">{patient?.user?.name ?? '-'}</td>
                                         <td className="p-2">{patient?.user?.email ?? '-'}</td>
                                         <td className="p-2">{patient?.phone ?? '-'}</td>
                                         <td className="p-2">{patient?.birth ? new Date(patient.birth).toLocaleDateString() : '-'}</td>
@@ -140,7 +156,9 @@ export default function PatientPage() {
                                                 
                                             </button>
 
-                                            <button title="Excluir" className="flex items-center gap-2 bg-red-600 text-white rounded px-3 py-1 hover:bg-red-700 transition">
+                                            <button title="Excluir"
+                                                onClick={()=>handleDelete(patient.id)} 
+                                                className="flex items-center gap-2 bg-red-600 text-white rounded px-3 py-1 hover:bg-red-700 transition">
                                                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M3 6h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                     <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
