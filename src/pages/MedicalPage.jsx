@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
+import CalendarComponent from "../components/dashboard/CalendarComponent";
 
 
 export default function MedicalPage() {
@@ -68,11 +69,11 @@ export default function MedicalPage() {
                     <table className=" min-w-full text-sm">
                         <thead>
                             <tr className="text-sm text-slate-400">
-                                <th>ID</th>
+                               
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Especiality</th>
-                                <th>Crm</th>
+                                
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -80,11 +81,11 @@ export default function MedicalPage() {
                             {
                                 doctors && doctors?.length > 0 ? (doctors.map((doctor) => (
                                     <tr key={doctor.id} className="text-base border-b-6 shadow-md bg-white text-sm text-center border-slate-100 rounded-md">
-                                        <td className="p-1">{doctor.id}</td>
+                                        
                                         <td>{doctor?.user?.name}</td>
                                         <td>{doctor?.user?.email}</td>
                                         <td>{doctor.especiality ?? 'no especiality'}</td>
-                                        <td>{doctor.crm}</td>
+                                        
                                         <td className="flex p-1 space-x-4 items-center justify-center">
                                             <Link to={`/dashboard/doctor/${doctor.id}`} title="Detalhes"
                                                 className=" bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition"
@@ -120,8 +121,10 @@ export default function MedicalPage() {
                     </table>
                 </div>
 
-                {/**upcoming appointment */}
-                <div className="w-80">
+                {/** side componentes */}
+                <div className="w-100">
+
+                    {/**upcoming appointments */}
                     <div className="bg-white rounded-lg p-3 shadow">
                         <div className="flex justify-between text-sm">
                             <h3 className=" font-semibold">Upcoming Appointment</h3>
@@ -145,6 +148,9 @@ export default function MedicalPage() {
                                 ))) : (<div className="text-center text-slate-300 text-sm">No Appointment found</div>)}
                         </div>
                     </div>
+
+                    {/** dates schedules */}
+                    <CalendarComponent />
                 </div>
 
             </div>
