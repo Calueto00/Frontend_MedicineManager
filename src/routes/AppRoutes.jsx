@@ -9,6 +9,7 @@ import MedicalPage from "../pages/MedicalPage";
 import DoctorDetails from "../pages/DoctorDetails";
 import DoctorAdd from "../pages/DoctorAdd";
 import PatientNew from "../pages/patientsPages/PatientNew";
+import HomePage from "../pages/HomePage";
 
 export default function AppRoutes() {
     return (
@@ -17,6 +18,12 @@ export default function AppRoutes() {
                 path="/login"
                 element={<Login />}
             />
+            {/** home pages index */}
+            <Route path="/"
+                    element={<HomePage />} 
+            />
+
+
 
             {/* Admin Routes com Layout */}
             <Route
