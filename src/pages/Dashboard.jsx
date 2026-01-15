@@ -19,7 +19,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [patientResponse, doctorResponse, appointmentResponse] = await Promise.all([
+                const [patientResponse, doctorResponse,appointmentResponse] = await Promise.all([
                     api.get('/patients'),
                     api.get('/doctors'),
                     api.get('/appointments'),
@@ -27,7 +27,7 @@ export default function Dashboard() {
 
                 setPatients(patientResponse.data || []);
                 setDoctors(doctorResponse.data || []);
-                setAppointments(appointmentResponse.data || []);
+               setAppointments(appointmentResponse.data || []);
 
                 setLoading(true);
             } catch (error) {
@@ -38,7 +38,7 @@ export default function Dashboard() {
         fetchData();
     }, []);
 
-    const patientCount = patients.length || 0;
+    const patientCount = patients?.length || 4;
     const doctorCount = doctors.length || 0;
     const appointmentCount = appointments.length || 0;
     const examesCount = 0;
@@ -75,7 +75,7 @@ export default function Dashboard() {
                             </svg>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm">Pacientes</span>
+                            <span className="text-gray-500 text-sm">Pacients</span>
                             <h2 className="font-bold text-2xl mt-1">{patientCount}</h2>
                         </div>
                     </div>
@@ -95,6 +95,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Appointments Card */}
+                    
                     <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
                         <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 text-white">
                             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -105,10 +106,11 @@ export default function Dashboard() {
                             </svg>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm">Agendamentos</span>
+                            <span className="text-gray-500 text-sm">Appointments</span>
                             <h2 className="font-bold text-2xl mt-1">{appointmentCount}</h2>
                         </div>
                     </div>
+                     
 
                     {/* Exams Card */}
                     <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
@@ -139,7 +141,7 @@ export default function Dashboard() {
                         <div className="flex justify-between">
                             <h3 className="text-sm font-semibold">Doctor List</h3>
                             <Link 
-                                className="text-blue-800 font-bold text-sm"
+                                className="text-blue-800 font-bold text-sm cursor-pointer"
                                 to={'/dashboard/doctors'} >See All</Link>
                         </div>
                         <div className=" h-35 overflow-y-auto">
