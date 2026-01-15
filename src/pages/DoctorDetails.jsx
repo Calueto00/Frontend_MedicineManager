@@ -20,17 +20,19 @@ const day = {
 export default function DoctorDetails() {
     const { id } = useParams();
     const [doctor, setDoctor] = useState([]);
-    const [appointments, setAppointments] = useState([]);
     const [schedules, setSchedules] = useState([]);
+    const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
+    
     const fetchData = async () => {
         try {
             await api.get(`/doctor/${id}`).then((response) => {
                 setDoctor(response.data.doctor);
-                setSchedules(response.data?.schedules);
-                setAppointments(response.data?.doctor.appointments);
+                setSchedules(response.data?.doctor?.schedules);
+               setAppointments(response.data?.doctor?.appointments || []);
             });
             setLoading(false);
+            console.log(appointments);
         } catch (error) {
             console.error(error);
         }
@@ -39,8 +41,11 @@ export default function DoctorDetails() {
     useEffect(() => {
         if (id) fetchData();
     });
+
+   
     return (
         <>
+        
             <div className="bg-white p-2 shadow-md">
                 <h1>Doctor Details</h1>
             </div>
@@ -81,7 +86,7 @@ export default function DoctorDetails() {
 
                 {/**doctor statistics */}
                 <div className="w-100 space-y-2">
-                    <div className="bg-white rounded-lg p-2 shadow-md space-y-2">
+                     <div className="bg-white rounded-lg p-2 shadow-md space-y-2">
                         <div className="flex items-center justify-between">
                             <h3 className="text-sm font-semibold">Doctor Statistics</h3>
                         </div>
@@ -90,31 +95,33 @@ export default function DoctorDetails() {
                                 <Pie
                                     data={{
                                         labels: [
-                                            `Total Appointments (${appointments.length})`,
-                                            `Scheduled (${appointments.filter(a => a.status === 'agendado').length})`,
-                                            `Completed (${appointments.filter(a => a.status === 'concluido').length})`,
-                                            `Canceled (${appointments.filter(a => a.status === 'cancelado').length})`
+                                            
+                                            `Pending (${appointments.filter(a => a.status === 'pending').length})`,
+                                            `Confirmed (${appointments.filter(a => a.status === 'confirmed').length})`,
+                                            `Conclude (${appointments.filter(a => a.status === 'concluded').length})`,
+                                            `Canceled (${appointments.filter(a => a.status === 'denied').length})`
                                         ],
                                         datasets: [
                                             {
                                                 label: 'Appointment Status',
                                                 data: [
-                                                    appointments.length,
-                                                    appointments.filter(a => a.status === 'agendado').length,
-                                                    appointments.filter(a => a.status === 'concluido').length,
-                                                    appointments.filter(a => a.status === 'cancelado').length
+                                                    
+                                                    appointments.filter(a => a.status === 'pending').length,
+                                                    appointments.filter(a => a.status === 'confirmed').length,
+                                                    appointments.filter(a => a.status === 'concluded').length,
+                                                    appointments.filter(a => a.status === 'denied').length
                                                 ],
                                                 backgroundColor: [
-                                                    '#3B82F6',
-                                                    '#10B981',
-                                                    '#F59E0B',
-                                                    '#8B5CF6'
+                                                    '#ec5610',
+                                                    '#174de2',
+                                                    '#2ceb25',
+                                                    '#f31a1a'
                                                 ],
                                                 borderColor: [
-                                                    '#1E40AF',
-                                                    '#047857',
-                                                    '#D97706',
-                                                    '#6D28D9'
+                                                    '#ec5610',
+                                                    '#174de2',
+                                                    '#2ceb25',
+                                                    '#f31a1a'
                                                 ],
                                                 borderWidth: 1
                                             }
@@ -139,6 +146,7 @@ export default function DoctorDetails() {
                             <p className="text-sm text-gray-500 text-center py-8">Nenhum agendamento encontrado</p>
                         )}
                     </div>
+                     
                         {/**schedules list */}
                     <div className="bg-white rounded-lg p-2 space-y-2 shadow-sm border border-slate-300">
                         <div className="text-sm flex items-center justify-between bg-blue-700 rounded-md p-1 text-white">
