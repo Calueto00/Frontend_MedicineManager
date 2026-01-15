@@ -10,6 +10,7 @@ import DoctorDetails from "../pages/DoctorDetails";
 import DoctorAdd from "../pages/DoctorAdd";
 import PatientNew from "../pages/patientsPages/PatientNew";
 import HomePage from "../pages/HomePage";
+import AppointmentPage from "../pages/AppointmentPage";
 
 export default function AppRoutes() {
     return (
@@ -45,6 +46,9 @@ export default function AppRoutes() {
                 <Route path="doctors" element={<MedicalPage />} />
                 <Route path="doctor_novo" element={<DoctorAdd />} />
                 <Route path="doctor/:id" element={<DoctorDetails />} />
+
+                {/**appointment routes */}
+                <Route path="appointments" element={<AppointmentPage />} />
             </Route>
 
             <Route
