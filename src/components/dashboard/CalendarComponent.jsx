@@ -25,18 +25,18 @@ export default function CalendarComponent(){
     if (loading) return <p>Carregando...</p>;
 
     return (
-        <div className="bg-white mt-1 rounded-md shadow p-2">
+        <div className="bg-white rounded-md shadow p-2 h-full">
             <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold p-1">Schedules week</h3>
                 <span className="text-sm text-gray-600">Total ({schedule?.length || 0})</span>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1 overflow-y-auto h-34">
                 {
                     schedule?.length === 0 ? (
                     <div className="p-2 text-center text-sm text-gray-400">
                         No schedule found
                     </div>) : (schedule?.map(s => (
-                        <div className="flex cursor-pointer hover:bg-gray-200 delay-150 duration transition-all items-center justify-between border p-2 rounded-lg border-slate-200 bg-slate-100">
+                        <div className="flex cursor-pointer hover:bg-gray-200 delay-150 duration transition-all items-center justify-between border p-1 rounded-lg border-slate-200 bg-slate-100">
                             <label htmlFor="">
                                 <h3 className="text-xs text-gray-600">Doctor</h3>
                                 <p className="text-sm font-semibold">{s?.doctor?.user?.name}</p>
