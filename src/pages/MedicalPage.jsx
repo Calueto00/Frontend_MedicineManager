@@ -7,7 +7,7 @@ import CalendarComponent from "../components/dashboard/CalendarComponent";
 
 export default function MedicalPage() {
     const [doctors, setDoctors] = useState([]);
-    const [upcoming, setUpComing] = useState([]);
+    const [appointments, setAppointments] = useState([]);
 
     const fetchData = async () => {
         try {
@@ -16,7 +16,7 @@ export default function MedicalPage() {
                 api.get('/doctors_appointment')
             ]);
             setDoctors(doctorResponse.data);
-            setUpComing(appointmentResponse.data);
+           setAppointments(appointmentResponse.data);
         } catch (error) {
             console.log(error);
         }
@@ -39,6 +39,9 @@ export default function MedicalPage() {
     useEffect(() => {
         fetchData();
     }, [])
+
+    //counts type of appointments
+    const pendingCount = appointments.filter(a => a.status === 'pending').length || 0;
 
 
     return (
@@ -122,35 +125,50 @@ export default function MedicalPage() {
                 </div>
 
                 {/** side componentes */}
-                <div className="w-100">
-
-                    {/**upcoming appointments */}
-                    <div className="bg-white rounded-lg p-3 shadow">
-                        <div className="flex justify-between text-sm">
-                            <h3 className=" font-semibold">Upcoming Appointment</h3>
-                            <span>Total({upcoming?.length})</span>
-                        </div>
-                        <div className="space-y-2">
-                            {upcoming && upcoming?.length > 0 ? (
-                                upcoming.map((appointment) => (
-                                    <div
-                                        key={appointment.id}
-                                        className="rounded-lg bg-slate-100 p-2 flex justify-between items-center">
-                                        <label htmlFor="" className="text-sm">
-                                            <h3 className="text-xs text-gray-700">Doctor</h3>
-                                            <span className="font-semibold">{appointment?.doctor?.user?.name}</span>
-                                        </label>
-
-                                        <label htmlFor="" className="text-sm">
-                                            <span className="font-semibold text-white bg-green-400 p-2 rounded-md">{appointment?.status}</span>
-                                        </label>
-                                    </div>
-                                ))) : (<div className="text-center text-slate-300 text-sm">No Appointment found</div>)}
-                        </div>
+                <div className="w-100 space-y-1">
+                    <div className="flex items-center justify-between text-sm bg-white p-1">
+                        <h3>Appointment</h3>
+                        <Link className="font-semibold text-blue-600" to={'/dashboard/appointments'}>See All</Link>
                     </div>
+                    <div className="grid grid-rows-3 h-[535px] gap-1">
+                        {/**upcoming appointments */}
+                        <div className="bg-white rounded-md h-full p-2">
+                            <div className="text-sm flex items-center justify-between">
+                                <h3 className="font-semibold">Doctors pending Appointment</h3>
+                                <span>Total - { appointments?.filter(a => a.status === 'pending')?.length}</span>
+                            </div>
+                            <div className="h-35 overflow-y-auto space-y-1 ">
+                                {
+                                    appointments?.filter(a => a.status === 'pending')?.map(doc => (
+                                        <div className="border text-sm rounded-md p-1 bg-slate-300 shadow-sm border-slate-200 flex items-center justify-between">
+                                            <h3 className="font-semibold">Dr. {doc.schedule?.doctor?.user?.name}</h3>
+                                            <span className="bg-orange-600 rounded-md p-1 text-white">{doc.status}</span>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                        {/**doctor with appointment confirmed */}
+                        <div className="bg-white rounded-md h-full p-2">
+                            <div className="text-sm flex items-center justify-between">
+                                <h3 className="font-semibold">Doctors confirmed Appointment</h3>
+                                <span>Total - { appointments?.filter(a => a.status === 'confirmed')?.length}</span>
+                            </div>
+                            <div className="h-35 overflow-y-auto space-y-1 ">
+                                {
+                                    appointments?.filter(a => a.status === 'confirmed')?.map(doc => (
+                                        <div className="border text-sm rounded-md p-1 bg-slate-300 shadow-sm border-slate-200 flex items-center justify-between">
+                                            <h3 className="font-semibold">Dr. {doc.schedule?.doctor?.user?.name}</h3>
+                                            <span className="bg-blue-600 rounded-md p-1 text-white">{doc.status}</span>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
 
-                    {/** dates schedules */}
-                    <CalendarComponent />
+                        {/** dates schedules */}
+                        <CalendarComponent />
+                    </div>
                 </div>
 
             </div>
