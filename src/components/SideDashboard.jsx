@@ -6,7 +6,7 @@ export default function SideDashboard() {
     const [isOpen, setIsOpen] = useState(true);
     const navigate = useNavigate();
     const auth = useAuth();
-    const user = auth?.user;
+    
     const logout = auth?.logout || (() => { });
 
     const menuItems = [
