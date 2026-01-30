@@ -1,0 +1,25 @@
+
+
+.has-appointment.pending {
+    background-color: #eb7e25 !important;
+    color: white !important;
+    border-radius: 5%;
+}
+
+.has-appointment.confirmed {
+    background-color: #2563eb !important;
+    color: white !important;
+    border-radius: 5%;
+}
+
+.has-appointment.concluded {
+    background-color: #1df02e !important;
+    color: white !important;
+    border-radius: 5%;
+}
+
+.has-appointment.denied {
+    background-color: #f51c1c !important;
+    color: white !important;
+    border-radius: 5%;
+}
