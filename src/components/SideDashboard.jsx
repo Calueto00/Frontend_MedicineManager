@@ -15,7 +15,7 @@ export default function SideDashboard() {
         { icon: "👨‍⚕️", label: "Doctors", path: "/dashboard/doctors" },
         { icon: "📋", label: "Appointments", path: "/dashboard/appointments" },
         { icon: "🏥", label: "Schedules", path: "/dashboard/schedules" },
-        { icon: "⚙️", label: "Departments", path: "/dashboard/departments" },
+        { icon: "⚙️", label: "Invoices", path: "/dashboard/invoices" },
     ];
 
     const handleLogout = () => {
@@ -54,9 +54,9 @@ export default function SideDashboard() {
                     <button
                         key={item.path}
                         onClick={() => navigate(item.path)}
-                        className="w-full flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-blue-500/40 transition-colors duration-200 group"
+                        className="w-full cursor-pointer flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-blue-500/40 transition-colors duration-200 group"
                     >
-                        <span className="text-2xl">{item.icon}</span>
+                        <span className="text-2xl ">{item.icon}</span>
                         {isOpen && (
                             <span className="text-sm font-medium group-hover:translate-x-1 transition-transform">
                                 {item.label}
