@@ -50,8 +50,8 @@ export default function GraficosDashboard({appointment, patient,doctor}) {
     
 
     return (
-        <section className="w-80">
-                <div className="bg-white border border-slate-300 rounded-lg shadow-md p-2 h-[250px]  rounded-lg">
+        <section className="w-100 bg-white  rounded-lg shadow-md border border-slate-300">
+                <div className=" p-2 h-[340px] space-y-2">
                     <h3 className=" font-semibold text-gray-500">
                         Proporção Pacientes vs Médicos
                     </h3>
@@ -62,7 +62,7 @@ export default function GraficosDashboard({appointment, patient,doctor}) {
                             maintainAspectRatio: true,
                             plugins: {
                                 legend: {
-                                    position: "left",
+                                    position: "bottom",
                                 },
                             },
                         }}
