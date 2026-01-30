@@ -1,10 +1,10 @@
 import { useAuth } from "../auth/AuthContext";
-import SideDashboard from "../components/SideDashboard";
+
 import api from "../api/axios";
 import { useEffect, useState } from "react";
 import GraficosDashboard from "../components/GraficosDashboard";
 import AppointmentDashboard from "../components/dashboard/AppointmentDashboard";
-import { Link } from "react-router-dom";
+import DoctorListDashboard from "../components/dashboard/DoctorListDashboard";
 
 export default function Dashboard() {
     const [patients, setPatients] = useState([]);
@@ -25,7 +25,7 @@ export default function Dashboard() {
                     api.get('/appointments'),
                 ]);
 
-                setPatients(patientResponse.data || []);
+                setPatients(patientResponse.data.patients || []);
                 setDoctors(doctorResponse.data || []);
                setAppointments(appointmentResponse.data || []);
 
@@ -38,7 +38,7 @@ export default function Dashboard() {
         fetchData();
     }, []);
 
-    const patientCount = patients?.length || 4;
+    const patientCount = patients?.length || 0;
     const doctorCount = doctors.length || 0;
     const appointmentCount = appointments.length || 0;
     const examesCount = 0;
@@ -46,28 +46,28 @@ export default function Dashboard() {
     return (
         <main className="flex h-screen">
             
-            <section className="flex-1  overflow-auto bg-slate-100">
-                <div className="flex items-center justify-between mb-2 bg-white p-2">
+            <section className="flex-1 overflow-auto bg-gray-50">
+                <div className="flex items-center justify-between mb-1 bg-gradient-to-r from-blue-50 to-blue-100 p-3 border-b border-blue-200 shadow-sm">
                     <div>
-                        <h1 className="text-xl font-bold text-gray-800">
-                            Olá, {user.name}
+                        <h1 className="text-2xl font-bold text-blue-900">
+                            Welcome, {user.name}
                         </h1>
                         <p className="text-gray-600 text-sm mt-2">
-                            Bem-vindo ao Sistema de Gerenciamento Hospitalar
+                            Hospital Management System Dashboard
                         </p>
                     </div>
-                    <div className="bg-blue-50 rounded-lg p-4">
-                        <span className="text-gray-700 font-medium">
-                            Permissão: <span className="text-blue-600 font-bold">{user.role}</span>
+                    <div className="bg-white rounded-lg p-3 shadow-sm border border-blue-200">
+                        <span className="text-gray-700 font-medium text-sm">
+                            Role: <span className="text-blue-600 font-bold">{user.role}</span>
                         </span>
                     </div>
                 </div>
 
-                {/**dados estatisticos de patients, doctors and appointments  */}
-                <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {/**Statistical data cards */}
+                <div className="p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {/* Patients Card */}
-                    <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-white">
+                    <div className="bg-white shadow-md border border-gray-200 border-l-4 border-l-blue-600 flex items-center gap-4 p-4 rounded-lg hover:shadow-lg hover:border-l-blue-800 transition-all">
+                        <div className="flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-white shadow-md">
                             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                                 <path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M8 11c1.657 0 3-1.343 3-3S9.657 5 8 5 5 6.343 5 8s1.343 3 3 3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -75,29 +75,28 @@ export default function Dashboard() {
                             </svg>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm">Pacients</span>
-                            <h2 className="font-bold text-2xl mt-1">{patientCount}</h2>
+                            <span className="text-gray-500 text-xs font-semibold uppercase tracking-wide">Patients</span>
+                            <h2 className="font-bold text-3xl mt-1 text-gray-800">{patientCount}</h2>
                         </div>
                     </div>
 
                     {/* Doctors Card */}
-                    <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-500 text-white">
+                    <div className="bg-white shadow-md border border-gray-200 border-l-4 border-l-amber-500 flex items-center gap-4 p-4 rounded-lg hover:shadow-lg hover:border-l-amber-700 transition-all">
+                        <div className="flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-md">
                             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M6 20v-1a4 4 0 014-4h4a4 4 0 014 4v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm">Médicos</span>
-                            <h2 className="font-bold text-2xl mt-1">{doctorCount}</h2>
+                            <span className="text-gray-500 text-xs font-semibold uppercase tracking-wide">Doctors</span>
+                            <h2 className="font-bold text-3xl mt-1 text-gray-800">{doctorCount}</h2>
                         </div>
                     </div>
 
                     {/* Appointments Card */}
-                    
-                    <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 text-white">
+                    <div className="bg-white shadow-md border border-gray-200 border-l-4 border-l-green-600 flex items-center gap-4 p-4 rounded-lg hover:shadow-lg hover:border-l-green-800 transition-all">
+                        <div className="flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 text-white shadow-md">
                             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                                 <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                                 <path d="M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -106,15 +105,14 @@ export default function Dashboard() {
                             </svg>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm">Appointments</span>
-                            <h2 className="font-bold text-2xl mt-1">{appointmentCount}</h2>
+                            <span className="text-gray-500 text-xs font-semibold uppercase tracking-wide">Appointments</span>
+                            <h2 className="font-bold text-3xl mt-1 text-gray-800">{appointmentCount}</h2>
                         </div>
                     </div>
-                     
 
                     {/* Exams Card */}
-                    <div className="bg-white shadow-md border border-slate-200 flex items-center gap-4 p-4 rounded-lg hover:shadow-xl transition-shadow">
-                        <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white">
+                    <div className="bg-white shadow-md border border-gray-200 border-l-4 border-l-purple-600 flex items-center gap-4 p-4 rounded-lg hover:shadow-lg hover:border-l-purple-800 transition-all">
+                        <div className="flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-purple-500 to-indigo-700 text-white shadow-md">
                             <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                                 <path d="M9 2h6l2 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V4l2-2z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M9 7h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -122,48 +120,24 @@ export default function Dashboard() {
                             </svg>
                         </div>
                         <div>
-                            <span className="text-gray-500 text-sm">Exames</span>
-                            <h2 className="font-bold text-2xl mt-1">{examesCount}</h2>
+                            <span className="text-gray-500 text-xs font-semibold uppercase tracking-wide">Exams</span>
+                            <h2 className="font-bold text-3xl mt-1 text-gray-800">{examesCount}</h2>
                         </div>
                     </div>
                 </div>
 
-                {/**aqui vem os blocos de graficos e listagem de appointments*/}
-                <div className="flex gap-2 p-2">
+                {/**Charts and appointment listings section */}
+                <div className="flex gap-3 p-4 h-100">
                     <GraficosDashboard 
                         appointment={appointmentCount} 
                         patient={patientCount}
                         doctor={doctorCount} />
-                    <AppointmentDashboard appointments={appointments} />
+                   <div className=" w-full">
+                         <AppointmentDashboard appointments={appointments} />
+                         <DoctorListDashboard />
+                   </div>
                 </div>
-                <div className=" p-2">
-                    <div className="border rounded-md bg-white  h-42 w-80 p-1 border-slate-300 shadow-md">
-                        <div className="flex justify-between">
-                            <h3 className="text-sm font-semibold">Doctor List</h3>
-                            <Link 
-                                className="text-blue-800 font-bold text-sm cursor-pointer"
-                                to={'/dashboard/doctors'} >See All</Link>
-                        </div>
-                        <div className=" h-35 overflow-y-auto">
-                            {
-                                doctors?.length === 0 ? (<div className="text-center text-sm text-gray-600 p-2">No Registers Found</div>) : (
-                                    <ul className="space-y-1">
-                                        {
-                                            doctors?.map((doctor)=>(
-                                                <li className="border border-slate-300 text-sm bg-slate-100 rounded flex justify-between items-center p-1" key={doctor.id}>
-                                                    
-                                                        <h3 className="font-semibold ">{doctor?.user?.name}</h3>
-                                                        <Link className=" font-bold text-blue-900" to={`/dashboard/doctor/${doctor.id}`}>Details</Link>
-                                                   
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                )
-                            }
-                        </div>
-                    </div>
-                </div>
+                
 
             </section>
 
