@@ -46,7 +46,8 @@ export default function AppointmentList({appointments}){
                                                         {appointments.status}</span>}
                                                 </td>
                                                 <td>
-                                                    <Link className="font-semibold text-white bg-blue-800 text-sm px-2 py-1 rounded" to={`/dashboard/appointment/${appointments.id}`}>See</Link>
+                                                    <Link className="font-semibold text-white bg-blue-800 text-sm px-2 py-1 rounded" 
+                                                    to={`/dashboard/appointment/details/${appointments.id}`}>See</Link>
                                                 </td>
                                             </tr>
                                         ))
